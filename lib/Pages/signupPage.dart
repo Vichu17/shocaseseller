@@ -14,11 +14,11 @@ class _SignUpPageState extends State<SignUpPage> {
   final _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey();
   bool value = false;
-  late String email;
-  late String password;
-  late String username;
-  late String phone;
-  late String repassword;
+  late String selleremail;
+  late String sellerpassword;
+  late String sellerusername;
+  late String sellerphone;
+  late String sellerrepassword;
 
 
 
@@ -79,7 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           width: 300,
                           child: TextField(
                             onChanged: (value){
-                              username = value;
+                              sellerusername = value;
                             },
                             decoration: InputDecoration(
                               filled: true,
@@ -104,7 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           child: TextField(
                             keyboardType: TextInputType.emailAddress,
                             onChanged: (value){
-                              email = value;
+                              selleremail = value;
                             },
                             decoration: InputDecoration(
                               filled: true,
@@ -128,7 +128,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           width: 300,
                           child: TextField(
                             onChanged: (value){
-                              phone = value;
+                              sellerphone = value;
                             },
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
@@ -153,7 +153,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           width: 300,
                           child: TextField(
                             onChanged: (value){
-                              password = value;
+                              sellerpassword = value;
                             },
                             obscureText: true,
                             decoration: InputDecoration(
@@ -178,7 +178,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           width: 300,
                           child: TextField(
                             onChanged: (value){
-                              repassword = value;
+                              sellerrepassword = value;
                             },
                             obscureText: true,
                             decoration: InputDecoration(
@@ -215,7 +215,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 try{
                                   final newUser = await _auth
                                       .createUserWithEmailAndPassword(
-                                      email: email, password: password);
+                                      email: sellerpassword, password: sellerpassword);
                                   if(newUser!= null){
                                     Navigator.pushNamed(context, '/login');
                                   }
@@ -224,10 +224,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                   print(e);
                                 }
                                 _firestore.collection('user_master').add({
-                                  'user_email':email,
-                                  'user_name':username,
-                                  'user_password':password,
-                                  'user_mobile':phone,
+                                  'user_email':selleremail,
+                                  'user_name':sellerusername,
+                                  'user_password':sellerpassword,
+                                  'user_mobile':sellerphone,
                                 });
                               },
                               minWidth: 300.0,

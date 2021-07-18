@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:shocaseseller/Pages/dashboardPage.dart';
 import 'package:shocaseseller/Pages/loginPage.dart';
@@ -6,6 +7,8 @@ import 'package:shocaseseller/Pages/signupPage.dart';
 import 'package:shocaseseller/Pages/welcomePage.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   // These two lines
   runApp(MyApp());
 }

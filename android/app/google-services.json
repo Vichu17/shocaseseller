@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "447885827394",
+    "project_id": "shocasedb",
+    "storage_bucket": "shocasedb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447885827394:android:e31676c62fd770233c3cdb",
+        "android_client_info": {
+          "package_name": "com.strazce.shocase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447885827394-ks0i9034cq7fafn65hkqlgu7kblahkka.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4w5PKXxkN8XiBiKIz2ZNLc8McHpLQihA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447885827394-ks0i9034cq7fafn65hkqlgu7kblahkka.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

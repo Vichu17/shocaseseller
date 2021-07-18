@@ -13,9 +13,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _auth = FirebaseAuth.instance;
-  late User loggedUser;
-  late String email;
-  late String password;
+  late User loggedSellerUser;
+  late String selleremail;
+  late String sellerpassword;
 
   final GlobalKey<FormState> _formKey = GlobalKey();
 
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: 300,
                           child: TextField(
                             onChanged: (value) {
-                              email = value;
+                              selleremail = value;
                             },
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                           width: 300,
                           child: TextField(
                             onChanged: (value) {
-                              password = value;
+                              sellerpassword = value;
                             },
                             obscureText: true,
                             decoration: InputDecoration(
@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                                 try {
                                   final user =
                                   await _auth.signInWithEmailAndPassword(
-                                      email: email, password: password);
+                                      email: selleremail, password: sellerpassword);
                                   if (user != null) {
                                     Navigator.pushNamed(context, '/dashboard');
                                   }
