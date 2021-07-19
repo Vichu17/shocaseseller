@@ -215,7 +215,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 try{
                                   final newUser = await _auth
                                       .createUserWithEmailAndPassword(
-                                      email: sellerpassword, password: sellerpassword);
+                                      email: selleremail, password: sellerpassword);
                                   if(newUser!= null){
                                     Navigator.pushNamed(context, '/login');
                                   }
