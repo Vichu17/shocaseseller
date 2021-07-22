@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:shocaseseller/Widgets/mainPageWidget.dart';
+import 'package:shocaseseller/Widgets/orders.dart';
 import 'package:shocaseseller/Widgets/sideDrawer.dart';
 
 class DashboardPageSeller extends StatefulWidget {
@@ -71,6 +73,19 @@ class _DashboardPageSellerState extends State<DashboardPageSeller> {
           ],
         ),
         drawer: SideDrawer(),
+        body: ListView(
+          children: [
+            Container(
+              height: 450,
+              color: Colors.blue,
+              child: MainPage(),
+            ),
+            Container(
+              height: 450,
+              child: Orders(),
+            ),
+          ],
+        )
       ),
     );
   }

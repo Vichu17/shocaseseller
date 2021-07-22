@@ -5,6 +5,7 @@ import 'package:shocaseseller/Pages/dashboardPage.dart';
 import 'package:shocaseseller/Pages/loginPage.dart';
 import 'package:shocaseseller/Pages/signupPage.dart';
 import 'package:shocaseseller/Pages/welcomePage.dart';
+import 'package:shocaseseller/Widgets/mainPageWidget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
