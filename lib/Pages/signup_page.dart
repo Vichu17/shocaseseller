@@ -1,0 +1,281 @@
+import 'dart:async';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shocase/pages/google_map.dart';
+import 'package:shocase/subpages/emailVerification.dart';
+
+class SignUpPage extends StatefulWidget {
+  static String routeName = '/signup-page';
+
+  @override
+  _SignUpPageState createState() => _SignUpPageState();
+}
+
+class _SignUpPageState extends State<SignUpPage> {
+  final auth = FirebaseAuth.instance;
+  late User user;
+  late Timer timer;
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  final GlobalKey<FormState> _formKey = GlobalKey();
+  bool value = false;
+  late String email;
+  late String password;
+  late String username;
+  late String phone;
+  late String repassword;
+
+  final _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: <Widget>[
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.only(bottom: 500),
+            decoration: BoxDecoration(
+              color: Color(0xFF0e2149),
+            ),
+            child: Image.asset(
+              'assets/logo.png',
+              height: 306,
+              width: 306,
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.only(bottom: 350),
+            child: Center(
+                child: Text(
+              'REGISTER',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                letterSpacing: 6,
+                fontWeight: FontWeight.w300,
+              ),
+            )),
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 220.0, left: 10.0, right: 10.0),
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
+              child: Container(
+                height: 430,
+                width: 360,
+                child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Text(
+                            'Please enter your Personal Info',
+                            style: TextStyle(color: Colors.grey[600]),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 10.0),
+                          width: 300,
+                          child: TextFormField(
+                            onChanged: (value) {
+                              username = value;
+                            },
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              hintText: 'User name',
+                              hintStyle: TextStyle(
+                                  color: Colors.grey[400], fontSize: 15),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 5.0, horizontal: 20.0),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(32.0)),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 8.0,
+                        ),
+                        Container(
+                          width: 300,
+                          child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            onChanged: (value) {
+                              email = value;
+                            },
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              hintText: 'Email',
+                              hintStyle: TextStyle(color: Colors.grey[400]),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 20.0),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(32.0)),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 8.0,
+                        ),
+                        Container(
+                          width: 300,
+                          child: TextFormField(
+                            onChanged: (value) {
+                              phone = value;
+                            },
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              hintText: 'Phone Number',
+                              hintStyle: TextStyle(color: Colors.grey[400]),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 20.0),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(32.0)),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 8.0,
+                        ),
+                        Container(
+                          width: 300,
+                          child: TextFormField(
+                            controller: _passwordController,
+                            validator: (value) {
+                              if (value!.isEmpty || value.length < 5) {
+                                return 'Password is too short!';
+                              }
+                            },
+                            onChanged: (value) {
+                              password = value;
+                            },
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              hintText: 'Password',
+                              hintStyle: TextStyle(color: Colors.grey[400]),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 20.0),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(32.0)),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 8.0,
+                        ),
+                        Container(
+                          width: 300,
+                          child: TextFormField(
+                            onChanged: (value) {
+                              repassword = value;
+                            },
+                            validator: (value) {
+                              if (value != _passwordController.text) {
+                                return 'Passwords do not match!';
+                              }
+                            },
+                            obscureText: true,
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              hintText: 'Confirm Password',
+                              hintStyle: TextStyle(color: Colors.grey[400]),
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 20.0),
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(32.0)),
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.only(top: 5),
+                          child: CheckboxListTile(
+                            controlAffinity: ListTileControlAffinity.leading,
+                            onChanged: (value) =>
+                                setState(() => this.value = value!),
+                            title: Text('I Accept the terms of the Agreement'),
+                            value: value,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 1.0),
+                          child: Material(
+                            color: Color(0xFF0e2149),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            child: MaterialButton(
+                              onPressed: () async {
+                                try {
+                                  final newUser = await _auth
+                                      .createUserWithEmailAndPassword(
+                                          email: email, password: password);
+                                  if (newUser != null) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => VerifyScreen(),
+                                      ),
+                                    );
+                                  }
+                                } catch (e) {
+                                  print(e);
+                                }
+                                _firestore.collection('user_master').add({
+                                  'user_email': email,
+                                  'user_name': username,
+                                  'user_password': password,
+                                  'user_mobile': phone,
+                                });
+                              },
+                              minWidth: 300.0,
+                              height: 20.0,
+                              child: Text(
+                                'Signup',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
