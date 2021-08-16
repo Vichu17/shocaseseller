@@ -1,8 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.shocaseseller">
+    package="com.example.shocase">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="shocaseseller"
+        android:label="shocase"
         android:icon="@mipmap/ic_launcher">
+
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyCJJgWCDRoiSTBGz2Pw-XH1ELohHE3QVNI"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
